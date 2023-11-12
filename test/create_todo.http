@@ -1,0 +1,19 @@
+@base_url=http://localhost:8080
+@prefix_path=todo
+
+# @name auth
+GET {{base_url}}/tokenz
+
+###
+@token = {{auth.response.body.$.token}}
+
+###
+# restcli --show body ./test/create_todo.http
+
+POST {{base_url}}/{{prefix_path}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "text": "task 2"
+}
