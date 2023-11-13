@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/thitiwutt/todoapi/auth"
@@ -48,6 +49,19 @@ func main() {
 
 	// Default returns an Engine instance with the Logger and Recovery middleware already attached.
 	r := gin.Default()
+
+	// SECTION - CORS
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{
+		"http://localhost:8080",
+	}
+	config.AllowHeaders = []string{
+		"Origin",
+		"Authorization",
+		"TransactionID",
+	}
+	r.Use(cors.New(config))
+
 	// SECTION - Readiness probe
 	r.GET("/health", func(ctx *gin.Context) {
 		ctx.Status(200)
@@ -70,6 +84,8 @@ func main() {
 
 	todoHandler := todo.NewTodoHandler(db)
 	protected.POST("/todo", todoHandler.NewTask)
+	protected.GET("/todo", todoHandler.ListTodos)
+	protected.DELETE("/todo/:id", todoHandler.DeleteTodo)
 
 	// Run attaches the router to a http.Server and starts listening and serving HTTP requests.
 	// r.Run()

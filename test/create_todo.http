@@ -12,7 +12,7 @@ GET {{base_url}}/tokenz
 
 POST {{base_url}}/{{prefix_path}}
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTk4ODYwNzJ9.u8lzwtTlhsEDZx0X5xLLLw0JyhOa_pOF1dhtW7xWObA
 
 {
   "text": "task 2"

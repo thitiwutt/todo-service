@@ -1,4 +1,4 @@
-FROM golang:1.17-buster AS build
+FROM golang:1.21.4 AS build
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ FROM gcr.io/distroless/base-debian11
 
 COPY --from=build /go/bin/app /app
 
-EXPOSE 8081
+EXPOSE 8080
 
 USER nonroot:nonroot
 
